@@ -1,6 +1,7 @@
 use bevy::prelude::*;
 
 use crate::components::{Road, RoadType, Tile};
+use crate::worldgen;
 
 pub struct WorldGenPlugin;
 
@@ -12,14 +13,10 @@ impl Plugin for WorldGenPlugin {
 }
 
 fn generate_world(mut commands: Commands) {
-    commands.spawn(Tile { x: 0, y: 0, z: 0 });
-    commands.spawn((
-        Tile { x: 1, y: 0, z: 0 },
-        Road {
-            variant: RoadType::Dirt,
-            bidirectional: true,
-        },
-    ));
+    let tiles = worldgen::generate_world(10, 10, 10)
+        .into_iter()
+        .map(|vec| Tile { position: vec });
+    commands.spawn_batch(tiles);
 }
 
 fn print_world(query: Query<(&Tile, Option<&Road>)>) {
@@ -28,11 +25,14 @@ fn print_world(query: Query<(&Tile, Option<&Road>)>) {
             Some(road) => {
                 println!(
                     "Tile at ({}, {}, {}) with road {:?}",
-                    tile.x, tile.y, tile.z, road.variant
+                    tile.position.x, tile.position.y, tile.position.z, road.variant
                 );
             }
             None => {
-                println!("Tile at ({}, {}, {})", tile.x, tile.y, tile.z);
+                println!(
+                    "Tile at ({}, {}, {})",
+                    tile.position.x, tile.position.y, tile.position.z
+                );
             }
         }
     }
