@@ -1,0 +1,50 @@
+name: Test Action
+
+on:
+  push:
+    branches:
+      - '*'
+      - '!v*'
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  test:
+    name: Test on ${{ matrix.platform }}
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.platform }}
+    permissions:
+      checks: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Install Linux dependencies
+        if: matrix.platform == 'ubuntu-latest'
+        run: |
+          sudo apt update
+          sudo apt install -y g++ pkg-config libx11-dev libasound2-dev libudev-dev
+
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          default: true
+
+      - name: Cargo test
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
+
+      - name: Clippy check
+        # This doesn't need to run 3 times
+        if: matrix.platform == 'ubuntu-latest'
+        uses: actions-rs/clippy-check@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          args: --all-features
