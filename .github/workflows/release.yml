@@ -49,7 +49,9 @@ jobs:
       - name: Package release artifact
         run: |
           mkdir -p release
-          tar -czf release/citybuilder-${{ github.ref_name }}-${{ matrix.platform.os}}-x86_64.tar.gz target/release/citybuilder{,.exe}
+          cp target/release/citybuilder{,.exe} release/
+          cp -rv assets release/
+          tar -czf release/citybuilder-${{ github.ref_name }}-${{ matrix.platform.os}}-x86_64.tar.gz -C release .
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
