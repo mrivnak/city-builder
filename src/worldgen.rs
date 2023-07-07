@@ -8,7 +8,7 @@ pub fn generate_world(xsize: u32, ysize: u32, zsize: u32) -> Vec<Vec3> {
         for y in 0..ysize {
             // TODO: use a noise generator rather than random
             let z: u32 = rng.gen_range(0..zsize);
-            world.push(Vec3 { x: x as f32, y: y as f32, z: z as f32 });
+            world.push(Vec3 { x: x as f32, y: y as f32, z: (z as f32) / 10. });
         }
     }
     world

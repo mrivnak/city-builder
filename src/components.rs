@@ -2,7 +2,14 @@ use bevy::prelude::*;
 
 #[derive(Component)]
 pub struct Tile {
-    pub position: Vec3,
+}
+
+#[derive(Bundle)]
+pub struct TileBundle {
+    pub tile: Tile,
+
+    #[bundle]
+    pub object: MaterialMeshBundle<StandardMaterial>
 }
 
 #[derive(Debug)]
