@@ -1,11 +1,15 @@
 use bevy::prelude::*;
 
-use crate::worldgen::{Terrain, TerrainContour};
+use crate::{
+    components::TileBundle,
+    worldgen::{Terrain, TerrainContour},
+};
 
 pub trait Tile {
-    fn get_scene(&self) -> Handle<Scene>;
+    fn get_scene(&self, assets: &Res<AssetServer>) -> Handle<Scene>;
     // x and z are coordinates relative to the grid, not world coordinates
     fn get_transform(&self, x: u32, z: u32) -> Transform;
+    fn get_bundle(&self, x: u32, z: u32, assets: &Res<AssetServer>) -> TileBundle;
 }
 
 // terrain form should already be generated, this just produces a tile to render
@@ -79,12 +83,25 @@ struct CornerTile {
 }
 
 impl Tile for CornerTile {
-    fn get_scene(&self) -> Handle<Scene> {
-        unimplemented!()
+    fn get_scene(&self, assets: &Res<AssetServer>) -> Handle<Scene> {
+        todo!()
     }
 
     fn get_transform(&self, x: u32, z: u32) -> Transform {
-        unimplemented!()
+        todo!()
+    }
+
+    fn get_bundle(&self, x: u32, z: u32, assets: &Res<AssetServer>) -> TileBundle {
+        let scene = self.get_scene(assets);
+        let transform = self.get_transform(x, z);
+        TileBundle {
+            model: SceneBundle {
+                scene,
+                transform,
+                ..default()
+            },
+            ..default()
+        }
     }
 }
 
@@ -94,12 +111,25 @@ struct EdgeTile {
 }
 
 impl Tile for EdgeTile {
-    fn get_scene(&self) -> Handle<Scene> {
-        unimplemented!()
+    fn get_scene(&self, assets: &Res<AssetServer>) -> Handle<Scene> {
+        todo!()
     }
 
     fn get_transform(&self, x: u32, z: u32) -> Transform {
-        unimplemented!()
+        todo!()
+    }
+
+    fn get_bundle(&self, x: u32, z: u32, assets: &Res<AssetServer>) -> TileBundle {
+        let scene = self.get_scene(assets);
+        let transform = self.get_transform(x, z);
+        TileBundle {
+            model: SceneBundle {
+                scene,
+                transform,
+                ..default()
+            },
+            ..default()
+        }
     }
 }
 
@@ -108,11 +138,24 @@ struct FlatTile {
 }
 
 impl Tile for FlatTile {
-    fn get_scene(&self) -> Handle<Scene> {
-        unimplemented!()
+    fn get_scene(&self, assets: &Res<AssetServer>) -> Handle<Scene> {
+        todo!()
     }
 
     fn get_transform(&self, x: u32, z: u32) -> Transform {
-        unimplemented!()
+        todo!()
+    }
+
+    fn get_bundle(&self, x: u32, z: u32, assets: &Res<AssetServer>) -> TileBundle {
+        let scene = self.get_scene(assets);
+        let transform = self.get_transform(x, z);
+        TileBundle {
+            model: SceneBundle {
+                scene,
+                transform,
+                ..default()
+            },
+            ..default()
+        }
     }
 }

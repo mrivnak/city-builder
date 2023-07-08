@@ -1,12 +1,12 @@
 use bevy::prelude::*;
 
-#[derive(Component)]
+#[derive(Component, Default)]
 pub struct Tile {}
 
-#[derive(Bundle)]
+#[derive(Bundle, Default)]
 pub struct TileBundle {
     pub tile: Tile,
 
     #[bundle]
-    pub gltf_object: SceneBundle
+    pub model: SceneBundle,
 }

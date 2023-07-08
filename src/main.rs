@@ -1,10 +1,10 @@
-use bevy::{prelude::*, window::PresentMode, render::camera::ScalingMode};
+use bevy::{prelude::*, render::camera::ScalingMode, window::PresentMode};
 use plugins::WorldGenPlugin;
 
 mod components;
 mod plugins;
-mod worldgen;
 mod tiles;
+mod worldgen;
 
 fn main() {
     App::new()
@@ -35,7 +35,14 @@ fn spawn_camera(mut commands: Commands) {
             ..default()
         }
         .into(),
-        transform: Transform::from_xyz(-200., 200., 200.).looking_at(Vec3 { x: 0., y: 0., z: 0. }, Vec3::Y),
+        transform: Transform::from_xyz(-200., 200., 200.).looking_at(
+            Vec3 {
+                x: 0.,
+                y: 0.,
+                z: 0.,
+            },
+            Vec3::Y,
+        ),
         ..default()
     });
 }
