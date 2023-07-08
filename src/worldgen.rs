@@ -1,15 +1,48 @@
 use bevy::prelude::*;
 use rand::Rng;
 
-pub fn generate_world(xsize: u32, ysize: u32, zsize: u32) -> Vec<Vec3> {
+use crate::{components::{Tile, TileBundle}, tiles::CornerType};
+
+fn generate_world_nodes(xsize: u32, ysize: u32, zsize: u32) -> Vec<Vec3> {
     let mut rng = rand::thread_rng();
     let mut world: Vec<Vec3> = Vec::new();
-    for x in 0..xsize {
-        for y in 0..ysize {
-            // TODO: use a noise generator rather than random
-            let z: u32 = rng.gen_range(0..zsize);
-            world.push(Vec3 { x: x as f32, y: y as f32, z: (z as f32) / 10. });
-        }
-    }
     world
+}
+
+pub fn generate_world(
+    xsize: u32,
+    ysize: u32,
+    zsize: u32,
+    assets: Res<AssetServer>,
+    mut meshes: ResMut<Assets<Mesh>>,
+    mut materials: ResMut<Assets<StandardMaterial>>,
+) -> Vec<TileBundle> {
+    let mut tiles = Vec::new();
+    tiles
+}
+
+pub struct Terrain {
+    pub contour: TerrainContour,
+    pub height: u8,
+}
+
+pub enum TerrainContour {
+    Flat,
+    North,
+    NorthEast(CornerType),
+    East,
+    SouthEast(CornerType),
+    South,
+    SouthWest(CornerType),
+    West,
+    NorthWest(CornerType),
+}
+
+#[derive(Clone, Debug)]
+enum TerrainType {
+    Grass,
+    Trees,
+    Dirt,
+    Water,
+    Sand,
 }

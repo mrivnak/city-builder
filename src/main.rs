@@ -4,6 +4,7 @@ use plugins::WorldGenPlugin;
 mod components;
 mod plugins;
 mod worldgen;
+mod tiles;
 
 fn main() {
     App::new()
@@ -34,7 +35,7 @@ fn spawn_camera(mut commands: Commands) {
             ..default()
         }
         .into(),
-        transform: Transform::from_xyz(-200., -200., 100.).looking_at(Vec3 { x: 10., y: 10., z: 0. }, Vec3::Z),
+        transform: Transform::from_xyz(-200., 200., 200.).looking_at(Vec3 { x: 0., y: 0., z: 0. }, Vec3::Y),
         ..default()
     });
 }
@@ -47,7 +48,7 @@ fn spawn_light(mut commands: Commands) {
             shadows_enabled: true,
             ..default()
         },
-        transform: Transform::from_xyz(10., 10., 100.),
+        transform: Transform::from_xyz(0., 100., 0.).looking_at(Vec3::ZERO, Vec3::Z),
         ..default()
     });
 }
