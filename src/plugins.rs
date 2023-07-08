@@ -14,15 +14,7 @@ impl Plugin for WorldGenPlugin {
     }
 }
 
-fn generate_world(
-    mut commands: Commands,
-    assets: Res<AssetServer>,
-) {
-    let tiles = worldgen::generate_world(
-        WORLD_X_SIZE,
-        WORLD_Y_SIZE,
-        WORLD_Z_SIZE,
-        assets,
-    );
+fn generate_world(mut commands: Commands, assets: Res<AssetServer>) {
+    let tiles = worldgen::generate_world(WORLD_X_SIZE, WORLD_Y_SIZE, WORLD_Z_SIZE, assets);
     commands.spawn_batch(tiles);
 }

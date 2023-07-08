@@ -2,7 +2,7 @@ use bevy::prelude::*;
 
 use crate::{
     components::TileBundle,
-    tiles::CornerType,
+    tiles::{get_tile_from_Terrain, CornerType},
 };
 
 fn generate_world_nodes(xsize: u32, ysize: u32, zsize: u32) -> Vec<Vec3> {
@@ -18,6 +18,34 @@ pub fn generate_world(
     assets: Res<AssetServer>,
 ) -> Vec<TileBundle> {
     let mut tiles = Vec::new();
+    tiles.push(
+        get_tile_from_Terrain(Terrain {
+            contour: TerrainContour::North,
+            height: 0,
+        })
+        .get_bundle(0, 0, &assets),
+    );
+    tiles.push(
+        get_tile_from_Terrain(Terrain {
+            contour: TerrainContour::NorthWest(CornerType::Outer),
+            height: 0,
+        })
+        .get_bundle(0, 1, &assets),
+    );
+    tiles.push(
+        get_tile_from_Terrain(Terrain {
+            contour: TerrainContour::West,
+            height: 0,
+        })
+        .get_bundle(1, 1, &assets),
+    );
+    tiles.push(
+        get_tile_from_Terrain(Terrain {
+            contour: TerrainContour::Flat,
+            height: 1,
+        })
+        .get_bundle(1, 0, &assets),
+    );
     tiles
 }
 

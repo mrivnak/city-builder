@@ -1,3 +1,5 @@
+use std::f32::consts::*;
+
 use bevy::prelude::*;
 
 use crate::{
@@ -84,11 +86,21 @@ struct CornerTile {
 
 impl Tile for CornerTile {
     fn get_scene(&self, assets: &Res<AssetServer>) -> Handle<Scene> {
-        todo!()
+        match self.corner_type {
+            CornerType::Inner => assets.load("models/cliff_stepsCornerInner_rock.glb#Scene0"),
+            CornerType::Outer => assets.load("models/cliff_stepsCorner_rock.glb#Scene0"),
+        }
     }
 
     fn get_transform(&self, x: u32, z: u32) -> Transform {
-        todo!()
+        let rotation = match self.orientation {
+            CornerOrientation::NorthWest => Quat::from_rotation_y(PI),
+            CornerOrientation::NorthEast => Quat::from_rotation_y(FRAC_PI_2),
+            CornerOrientation::SouthEast => Quat::from_rotation_y(0.),
+            CornerOrientation::SouthWest => Quat::from_rotation_y(-FRAC_PI_2),
+        };
+
+        Transform::from_xyz(x as f32, self.height as f32, z as f32).with_rotation(rotation)
     }
 
     fn get_bundle(&self, x: u32, z: u32, assets: &Res<AssetServer>) -> TileBundle {
@@ -112,16 +124,26 @@ struct EdgeTile {
 
 impl Tile for EdgeTile {
     fn get_scene(&self, assets: &Res<AssetServer>) -> Handle<Scene> {
-        todo!()
+        assets.load("models/cliff_steps_rock.glb#Scene0")
     }
 
     fn get_transform(&self, x: u32, z: u32) -> Transform {
-        todo!()
+        let rotation = match self.orientation {
+            EdgeOrientation::North => Quat::from_rotation_y(FRAC_PI_2),
+            EdgeOrientation::East => Quat::from_rotation_y(0.),
+            EdgeOrientation::South => Quat::from_rotation_y(-FRAC_PI_2),
+            EdgeOrientation::West => Quat::from_rotation_y(PI),
+        };
+
+        Transform::from_xyz(x as f32, self.height as f32, z as f32).with_rotation(rotation)
     }
 
     fn get_bundle(&self, x: u32, z: u32, assets: &Res<AssetServer>) -> TileBundle {
+        println!("edge tile");
         let scene = self.get_scene(assets);
+        println!("got scene: {:?}", scene.id());
         let transform = self.get_transform(x, z);
+        println!("got transform: {:?}", transform);
         TileBundle {
             model: SceneBundle {
                 scene,
@@ -139,11 +161,11 @@ struct FlatTile {
 
 impl Tile for FlatTile {
     fn get_scene(&self, assets: &Res<AssetServer>) -> Handle<Scene> {
-        todo!()
+        assets.load("models/ground_grass.glb#Scene0")
     }
 
     fn get_transform(&self, x: u32, z: u32) -> Transform {
-        todo!()
+        Transform::from_xyz(x as f32, self.height as f32, z as f32)
     }
 
     fn get_bundle(&self, x: u32, z: u32, assets: &Res<AssetServer>) -> TileBundle {
