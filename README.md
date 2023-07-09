@@ -20,6 +20,7 @@ City builder game where time progresses from the stone age into the future. Uses
 
 - [Rust](https://www.rust-lang.org/tools/install)
 - Bevy's [dependencies](https://bevyengine.org/learn/book/getting-started/setup/)
+- LLD (required in Debug mode for faster compile times)
 
 ### Running
 
@@ -27,6 +28,8 @@ There's a couple development features that can be enabled to speed up compile ti
 
 ```bash
 cargo run
+
+cargo run --features bevy/dynamic_linking,inspector
 ```
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.
