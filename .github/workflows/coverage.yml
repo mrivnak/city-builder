@@ -1,4 +1,4 @@
-name: Coverage
+name: Test Coverage
 on:
   push:
     branches:
@@ -7,6 +7,7 @@ env:
   RUST_BACKTRACE: 1
 jobs:
   coverage:
+    name: Create Coverage Report
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
