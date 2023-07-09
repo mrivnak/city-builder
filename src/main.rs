@@ -1,30 +1,39 @@
 use bevy::{prelude::*, render::camera::ScalingMode, window::PresentMode};
 use plugins::WorldGenPlugin;
 
+#[cfg(feature = "inspector")]
+use bevy_inspector_egui::quick::WorldInspectorPlugin;
+
 mod components;
 mod plugins;
-mod tiles;
 mod worldgen;
 
 fn main() {
-    App::new()
-        .add_plugins(DefaultPlugins.set(WindowPlugin {
-            primary_window: Some(Window {
-                title: "City Builder".into(),
-                resolution: (1280., 720.).into(),
-                present_mode: PresentMode::AutoVsync,
-                // Tells wasm to resize the window according to the available canvas
-                fit_canvas_to_parent: true,
-                // Tells wasm not to override default event handling, like F5, Ctrl+R etc.
-                prevent_default_event_handling: false,
-                ..default()
-            }),
+    let mut app = App::new();
+
+    app.add_plugins(DefaultPlugins.set(WindowPlugin {
+        primary_window: Some(Window {
+            title: "City Builder".into(),
+            resolution: (1280., 720.).into(),
+            present_mode: PresentMode::AutoVsync,
+            // Tells wasm to resize the window according to the available canvas
+            fit_canvas_to_parent: true,
+            // Tells wasm not to override default event handling, like F5, Ctrl+R etc.
+            prevent_default_event_handling: false,
             ..default()
-        }))
-        .add_plugin(WorldGenPlugin)
-        .add_startup_system(spawn_camera)
-        .add_startup_system(spawn_light)
-        .run();
+        }),
+        ..default()
+    }))
+    .add_plugin(WorldGenPlugin)
+    .add_startup_system(spawn_camera)
+    .add_startup_system(spawn_light);
+
+    #[cfg(feature = "inspector")]
+    {
+        app.add_plugin(WorldInspectorPlugin::new());
+    }
+
+    app.run();
 }
 
 fn spawn_camera(mut commands: Commands) {
