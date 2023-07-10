@@ -28,7 +28,7 @@ jobs:
         if: matrix.platform.runner == 'ubuntu-latest'
         run: |
           sudo apt update
-          sudo apt install -y g++ pkg-config libx11-dev libasound2-dev libudev-dev
+          sudo apt install -y g++ pkg-config libx11-dev libasound2-dev libudev-dev libwayland-dev
 
       - name: Install Rust
         uses: actions-rs/toolchain@v1
