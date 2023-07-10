@@ -1,11 +1,12 @@
+#[derive(Clone)]
 pub struct TerrainNode {
-    terrain: Terrain,
-    x: u32,
-    z: u32,
+    pub terrain: Terrain,
+    pub x: u32,
+    pub z: u32,
 }
 
-#[derive(Clone)]
-#[cfg_attr(test, derive(Debug, PartialEq))]
+#[derive(Clone, PartialEq)]
+#[cfg_attr(test, derive(Debug))]
 pub enum Terrain {
     Grass,
     Dirt,

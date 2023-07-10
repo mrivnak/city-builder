@@ -2,8 +2,8 @@ use bevy::prelude::*;
 
 use crate::worldgen;
 
-const WORLD_X_SIZE: u32 = 20;
-const WORLD_Z_SIZE: u32 = 20;
+// Square world
+const WORLD_SIZE: u32 = 20;
 
 pub struct WorldGenPlugin;
 
@@ -14,6 +14,6 @@ impl Plugin for WorldGenPlugin {
 }
 
 fn generate_world(mut commands: Commands, assets: Res<AssetServer>) {
-    let tiles = worldgen::generate_world(WORLD_X_SIZE, WORLD_Z_SIZE, assets);
+    let tiles = worldgen::generate_world(WORLD_SIZE, assets);
     commands.spawn_batch(tiles);
 }
