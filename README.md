@@ -19,6 +19,7 @@ City builder game where time progresses from the stone age into the future. Uses
 
 - [Rust nightly](https://www.rust-lang.org/tools/install)
 - Bevy's [dependencies](https://bevyengine.org/learn/book/getting-started/setup/)
+  - plus libwayland and libxkbcommon for Linux
 - LLD (required in Debug mode for faster compile times)
 
 ### Running
