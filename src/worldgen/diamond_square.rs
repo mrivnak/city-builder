@@ -12,7 +12,7 @@ fn normalize_grid_size(size: u32) -> u32 {
     2_u32.pow(exp) + 1
 }
 
-fn trim_grid(size: u32, grid: &mut Vec<Vec<TerrainNode>>) {
+fn trim_grid(size: u32, grid: &mut Vec<Vec<f32>>) {
     grid.truncate(size as usize);
     for row in grid.iter_mut() {
         row.truncate(size as usize);
@@ -37,18 +37,7 @@ mod test {
 
     #[test]
     fn test_trim_grid() {
-        let example_node = TerrainNode {
-            terrain: Terrain::Grass,
-            x: 0,
-            z: 0,
-        };
-        let mut grid = vec![
-            vec![example_node.clone(); 5],
-            vec![example_node.clone(); 5],
-            vec![example_node.clone(); 5],
-            vec![example_node.clone(); 5],
-            vec![example_node.clone(); 5],
-        ];
+        let mut grid = vec![vec![1.0; 5]; 5];
 
         trim_grid(3, &mut grid);
         assert_eq!(grid.len(), 3);
