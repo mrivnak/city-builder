@@ -11,14 +11,13 @@
 ![Coveralls](https://img.shields.io/badge/coveralls-%23b94947.svg?style=for-the-badge&logo=coveralls&logoColor=white)
 ![Renovate](https://img.shields.io/badge/renovate-%230281a1?style=for-the-badge&logo=renovatebot&logoColor=white)
 
-
 City builder game where time progresses from the stone age into the future. Uses the [Bevy](https://bevyengine.org/) game engine
 
 ## Development
 
 ### Prerequisites
 
-- [Rust](https://www.rust-lang.org/tools/install)
+- [Rust nightly](https://www.rust-lang.org/tools/install)
 - Bevy's [dependencies](https://bevyengine.org/learn/book/getting-started/setup/)
 - LLD (required in Debug mode for faster compile times)
 
@@ -28,7 +27,7 @@ There's a couple development features that can be enabled to speed up compile ti
 
 ```bash
 cargo run
-
+# or
 cargo run --features bevy/dynamic_linking,inspector
 ```
 

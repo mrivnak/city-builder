@@ -12,9 +12,34 @@ default = []
 inspector = ["bevy-inspector-egui"]
 
 [dependencies]
-bevy = "0.10.1"
-bevy-inspector-egui = { version = "0.18.3", features = ["highlight_changes"], optional = true }
+bevy-inspector-egui = { version = "0.18.3", features = [ "highlight_changes" ], optional = true }
 rand = "0.8.5"
+
+[dependencies.bevy]
+version = "0.10.1"
+default-features = false
+features = [
+    "animation",
+    "bevy_asset",
+    "bevy_audio",
+    "bevy_scene",
+    "bevy_winit",
+    "bevy_core_pipeline",
+    "bevy_pbr",
+    "bevy_gltf",
+    "bevy_render",
+    "bevy_sprite",
+    "bevy_text",
+    "bevy_ui",
+    "png",
+    "ktx2",
+    "zstd",
+    "vorbis",
+    "x11",
+    "wayland",
+    "filesystem_watcher",
+    "tonemapping_luts",
+]
 
 # Enable a small amount of optimization in debug mode
 [profile.dev]
