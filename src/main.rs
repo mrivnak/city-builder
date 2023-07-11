@@ -39,17 +39,13 @@ fn main() {
 fn spawn_camera(mut commands: Commands) {
     commands.spawn(Camera3dBundle {
         projection: OrthographicProjection {
-            scale: 10.0,
+            scale: 60.0,
             scaling_mode: ScalingMode::FixedVertical(2.0),
             ..default()
         }
         .into(),
         transform: Transform::from_xyz(-200., 200., 200.).looking_at(
-            Vec3 {
-                x: 0.,
-                y: 0.,
-                z: 0.,
-            },
+            Vec3 { x: 64.0, y: 0.0, z: 64.0},
             Vec3::Y,
         ),
         ..default()

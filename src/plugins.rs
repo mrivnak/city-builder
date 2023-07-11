@@ -3,7 +3,7 @@ use bevy::prelude::*;
 use crate::worldgen;
 
 // Square world
-const WORLD_SIZE: u32 = 20;
+const WORLD_SIZE: u32 = 128;
 
 pub struct WorldGenPlugin;
 

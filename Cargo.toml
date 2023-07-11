@@ -13,6 +13,7 @@ inspector = ["bevy-inspector-egui"]
 
 [dependencies]
 bevy-inspector-egui = { version = "0.18.3", features = [ "highlight_changes" ], optional = true }
+bevycheck = "0.5.2"
 rand = "0.8.5"
 
 [dependencies.bevy]
@@ -36,7 +37,6 @@ features = [
     "zstd",
     "vorbis",
     "x11",
-    "wayland",
     "filesystem_watcher",
     "tonemapping_luts",
 ]
