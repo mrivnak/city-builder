@@ -1,7 +1,8 @@
 use rand::{rngs::StdRng, Rng, SeedableRng};
 use std::time::Instant;
 
-use super::terrain::{Terrain, TerrainNode};
+
+use super::terrain::{Terrain, TerrainProp, TerrainNode};
 
 const MAX_HEIGHT: u32 = 100;
 const MIN_HEIGHT: u32 = 0;
@@ -14,13 +15,23 @@ pub fn generate_world_nodes(size: u32) -> Vec<Vec<TerrainNode>> {
 
     trim_grid(size, &mut height_map);
 
-    let set_node = |x: u32, z: u32, height: u32| -> TerrainNode {
+    let mut rng = StdRng::from_entropy();
+
+    let mut set_node = |x: u32, z: u32, height: u32| -> TerrainNode {
+        let tree_chance = 50;
+        let tree = rng.gen_range(0..100) < tree_chance;
+
         let terrain = match height {
             x if x < PERCENT_WATER => Terrain::Water,
+            x if x > 40 && tree => Terrain::GrassWith(TerrainProp::Tree),
             _ => Terrain::Grass, // TODO: add forest, mountain, etc.
         };
-        TerrainNode { x, z, terrain }
+        TerrainNode { x, z, terrain, resource: None }
     };
+
+    // TODO: generate sand/rock layer
+    // TODO: generate resource layer
+    // TODO: Make sure that enough resources are generated on land
 
     let terrain_map = height_map
         .iter()
@@ -37,22 +48,18 @@ pub fn generate_world_nodes(size: u32) -> Vec<Vec<TerrainNode>> {
     terrain_map
 }
 
-fn check(map: &Vec<Vec<u32>>) -> bool {
-    const THRESHOLD: u32 = 5;
+fn check(map: &Vec<Vec<u32>>, value: u32, threshold: u32) -> bool {
     let mut count = 0;
     for row in map {
         for height in row {
-            if *height < PERCENT_WATER {
+            if *height < value {
                 count += 1;
             }
         }
     }
     let actual_percent = (count * 100) / (map.len() * map.len()) as u32;
-    let diff = actual_percent.abs_diff(PERCENT_WATER);
-    println!("count: {}", count);
-    println!("size: {}", map.len() * map.len());
-    println!("Actual percent: {}", actual_percent);
-    diff < THRESHOLD
+    let diff = actual_percent.abs_diff(value);
+    diff < threshold
 }
 
 fn generate_height_map(size: u32) -> Vec<Vec<u32>> {
@@ -81,7 +88,7 @@ fn generate_height_map(size: u32) -> Vec<Vec<u32>> {
             roughness /= 2;
         }
 
-        if check(&map) {
+        if check(&map, PERCENT_WATER, 5) {
             println!("World generation complete");
             break;
         }

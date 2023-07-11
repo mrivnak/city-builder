@@ -1,6 +1,7 @@
 #[derive(Clone)]
 pub struct TerrainNode {
     pub terrain: Terrain,
+    pub resource: Option<Resource>,
     pub x: u32,
     pub z: u32,
 }
@@ -9,17 +10,21 @@ pub struct TerrainNode {
 #[cfg_attr(test, derive(Debug))]
 pub enum Terrain {
     Grass,
-    Dirt,
+    GrassWith(TerrainProp),
     Water,
+    Dirt,
 }
 
-impl Terrain {
-    /// Get terrains that cannot be adjacent to this terrain
-    pub fn get_invalid(&self) -> Vec<Terrain> {
-        match self {
-            Terrain::Grass => vec![],
-            Terrain::Dirt => vec![Terrain::Water],
-            Terrain::Water => vec![Terrain::Dirt],
-        }
-    }
+#[derive(Clone, PartialEq)]
+#[cfg_attr(test, derive(Debug))]
+pub enum TerrainProp {
+    Tree,
+    Rock,
+}
+
+#[derive(Clone, PartialEq)]
+#[cfg_attr(test, derive(Debug))]
+pub enum Resource {
+    Coal,
+    Iron,
 }
