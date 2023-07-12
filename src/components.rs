@@ -16,24 +16,18 @@ pub struct Resource {
 #[derive(Bundle, Default)]
 pub struct TileBundle {
     pub tile: Tile,
-
-    #[bundle]
     pub model: SceneBundle,
 }
 
 #[derive(Bundle, Default)]
 pub struct PropBundle {
     pub prop: Prop,
-
-    #[bundle]
     pub model: SceneBundle,
 }
 
 #[derive(Bundle)]
 pub struct ResourceBundle {
     pub resource: Resource,
-
-    #[bundle]
     pub model: SceneBundle,
 }
 

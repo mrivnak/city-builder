@@ -23,4 +23,3 @@ pub enum TerrainProp {
     Rock,
     Resource(ResourceType),
 }
-

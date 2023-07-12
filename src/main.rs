@@ -25,10 +25,10 @@ fn main() {
         }),
         ..default()
     }))
-    .add_plugin(WorldGenPlugin)
-    .add_plugin(CameraControlPlugin)
-    .add_startup_system(spawn_camera)
-    .add_startup_system(spawn_light);
+    .add_plugins(WorldGenPlugin)
+    .add_plugins(CameraControlPlugin)
+    .add_systems(Startup, spawn_camera)
+    .add_systems(Startup, spawn_light);
 
     #[cfg(feature = "inspector")]
     {
@@ -39,25 +39,23 @@ fn main() {
 }
 
 fn spawn_camera(mut commands: Commands) {
-    commands.spawn((
-        Camera3dBundle {
-            projection: OrthographicProjection {
-                scale: 50.0,
-                scaling_mode: ScalingMode::FixedVertical(2.0),
-                ..default()
-            }
-            .into(),
-            transform: Transform::from_xyz(-200., 200., 200.).looking_at(
-                Vec3 {
-                    x: 64.0,
-                    y: 0.0,
-                    z: 64.0,
-                },
-                Vec3::Y,
-            ),
+    commands.spawn((Camera3dBundle {
+        projection: OrthographicProjection {
+            scale: 50.0,
+            scaling_mode: ScalingMode::FixedVertical(2.0),
             ..default()
-        },
-    ));
+        }
+        .into(),
+        transform: Transform::from_xyz(-200., 200., 200.).looking_at(
+            Vec3 {
+                x: 64.0,
+                y: 0.0,
+                z: 64.0,
+            },
+            Vec3::Y,
+        ),
+        ..default()
+    },));
 }
 
 fn spawn_light(mut commands: Commands) {

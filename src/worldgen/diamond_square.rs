@@ -1,8 +1,7 @@
 use rand::{rngs::StdRng, Rng, SeedableRng};
 use std::time::Instant;
 
-
-use super::terrain::{Terrain, TerrainProp, TerrainNode};
+use super::terrain::{Terrain, TerrainNode, TerrainProp};
 
 const MAX_HEIGHT: u32 = 100;
 const MIN_HEIGHT: u32 = 0;

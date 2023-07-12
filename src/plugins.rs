@@ -9,24 +9,23 @@ pub struct WorldGenPlugin;
 
 impl Plugin for WorldGenPlugin {
     fn build(&self, app: &mut App) {
-        app.add_startup_system(generate_world);
+        app.add_systems(Startup, generate_world);
     }
 }
 
 fn generate_world(mut commands: Commands, assets: Res<AssetServer>) {
     let (tiles, props, resources) = worldgen::generate_world(WORLD_SIZE, assets);
-    
+
     commands.spawn_batch(tiles);
     commands.spawn_batch(props);
     commands.spawn_batch(resources);
 }
 
-
 pub struct CameraControlPlugin;
 
 impl Plugin for CameraControlPlugin {
     fn build(&self, app: &mut App) {
-        app.add_system(control_camera);
+        app.add_systems(Update, control_camera);
     }
 }
 

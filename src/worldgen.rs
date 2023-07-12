@@ -189,7 +189,6 @@ fn add_single_resource(map: &mut Vec<Vec<TerrainNode>>, resource: ResourceType) 
                     continue;
                 }
 
-
                 if x as i32 + i < 0
                     || x as i32 + i >= map.len() as i32
                     || z as i32 + j < 0
