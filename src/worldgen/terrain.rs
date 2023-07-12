@@ -1,7 +1,8 @@
+use crate::resources::ResourceType;
+
 #[derive(Clone)]
 pub struct TerrainNode {
     pub terrain: Terrain,
-    pub resource: Option<Resource>,
     pub x: u32,
     pub z: u32,
 }
@@ -20,11 +21,6 @@ pub enum Terrain {
 pub enum TerrainProp {
     Tree,
     Rock,
+    Resource(ResourceType),
 }
 
-#[derive(Clone, PartialEq)]
-#[cfg_attr(test, derive(Debug))]
-pub enum Resource {
-    Coal,
-    Iron,
-}

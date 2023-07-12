@@ -7,12 +7,11 @@ use super::terrain::{Terrain, TerrainProp, TerrainNode};
 const MAX_HEIGHT: u32 = 100;
 const MIN_HEIGHT: u32 = 0;
 const INITIAL_ROUGHNESS: u8 = 110;
+
 const PERCENT_WATER: u32 = 20;
 
 pub fn generate_world_nodes(size: u32) -> Vec<Vec<TerrainNode>> {
-    let start = Instant::now();
     let mut height_map = generate_height_map(normalize_grid_size(size));
-
     trim_grid(size, &mut height_map);
 
     let mut rng = StdRng::from_entropy();
@@ -23,17 +22,13 @@ pub fn generate_world_nodes(size: u32) -> Vec<Vec<TerrainNode>> {
 
         let terrain = match height {
             x if x < PERCENT_WATER => Terrain::Water,
-            x if x > 40 && tree => Terrain::GrassWith(TerrainProp::Tree),
+            x if x > 35 && tree => Terrain::GrassWith(TerrainProp::Tree),
             _ => Terrain::Grass, // TODO: add forest, mountain, etc.
         };
-        TerrainNode { x, z, terrain, resource: None }
+        TerrainNode { x, z, terrain }
     };
 
-    // TODO: generate sand/rock layer
-    // TODO: generate resource layer
-    // TODO: Make sure that enough resources are generated on land
-
-    let terrain_map = height_map
+    let terrain_map: Vec<Vec<TerrainNode>> = height_map
         .iter()
         .enumerate()
         .map(|(x, row)| {
@@ -44,7 +39,6 @@ pub fn generate_world_nodes(size: u32) -> Vec<Vec<TerrainNode>> {
         })
         .collect();
 
-    println!("World generated in {:?}", start.elapsed());
     terrain_map
 }
 
@@ -89,10 +83,8 @@ fn generate_height_map(size: u32) -> Vec<Vec<u32>> {
         }
 
         if check(&map, PERCENT_WATER, 5) {
-            println!("World generation complete");
             break;
         }
-        println!("World generation failed, retrying");
     }
 
     map

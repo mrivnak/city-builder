@@ -7,6 +7,7 @@ use bevy_inspector_egui::quick::WorldInspectorPlugin;
 mod components;
 mod plugins;
 mod worldgen;
+mod resources;
 
 fn main() {
     let mut app = App::new();
