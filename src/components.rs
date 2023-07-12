@@ -3,10 +3,10 @@ use bevy::prelude::*;
 use crate::resources::ResourceType;
 
 #[derive(Component, Default)]
-pub struct Tile {}
+pub struct Tile;
 
 #[derive(Component, Default)]
-pub struct Prop {}
+pub struct Prop;
 
 #[derive(Component)]
 pub struct Resource {
@@ -36,3 +36,6 @@ pub struct ResourceBundle {
     #[bundle]
     pub model: SceneBundle,
 }
+
+#[derive(Component)]
+pub struct PanOrbitCamera;

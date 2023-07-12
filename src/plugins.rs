@@ -20,3 +20,16 @@ fn generate_world(mut commands: Commands, assets: Res<AssetServer>) {
     commands.spawn_batch(props);
     commands.spawn_batch(resources);
 }
+
+
+pub struct CameraControlPlugin;
+
+impl Plugin for CameraControlPlugin {
+    fn build(&self, app: &mut App) {
+        app.add_system(control_camera);
+    }
+}
+
+fn control_camera() {
+    // TODO: implement camera control
+}

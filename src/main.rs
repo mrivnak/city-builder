@@ -1,13 +1,13 @@
 use bevy::{prelude::*, render::camera::ScalingMode, window::PresentMode};
-use plugins::WorldGenPlugin;
+use plugins::{CameraControlPlugin, WorldGenPlugin};
 
 #[cfg(feature = "inspector")]
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
 
 mod components;
 mod plugins;
-mod worldgen;
 mod resources;
+mod worldgen;
 
 fn main() {
     let mut app = App::new();
@@ -26,6 +26,7 @@ fn main() {
         ..default()
     }))
     .add_plugin(WorldGenPlugin)
+    .add_plugin(CameraControlPlugin)
     .add_startup_system(spawn_camera)
     .add_startup_system(spawn_light);
 
@@ -38,19 +39,25 @@ fn main() {
 }
 
 fn spawn_camera(mut commands: Commands) {
-    commands.spawn(Camera3dBundle {
-        projection: OrthographicProjection {
-            scale: 60.0,
-            scaling_mode: ScalingMode::FixedVertical(2.0),
+    commands.spawn((
+        Camera3dBundle {
+            projection: OrthographicProjection {
+                scale: 50.0,
+                scaling_mode: ScalingMode::FixedVertical(2.0),
+                ..default()
+            }
+            .into(),
+            transform: Transform::from_xyz(-200., 200., 200.).looking_at(
+                Vec3 {
+                    x: 64.0,
+                    y: 0.0,
+                    z: 64.0,
+                },
+                Vec3::Y,
+            ),
             ..default()
-        }
-        .into(),
-        transform: Transform::from_xyz(-200., 200., 200.).looking_at(
-            Vec3 { x: 64.0, y: 0.0, z: 64.0},
-            Vec3::Y,
-        ),
-        ..default()
-    });
+        },
+    ));
 }
 
 fn spawn_light(mut commands: Commands) {
