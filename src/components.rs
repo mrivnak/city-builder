@@ -31,5 +31,16 @@ pub struct ResourceBundle {
     pub model: SceneBundle,
 }
 
-#[derive(Component)]
-pub struct PanOrbitCamera;
+#[derive(Component, Default)]
+pub struct PanOrbitCamera {
+    pub heading: OrthographicCameraHeading,
+}
+
+#[derive(Default)]
+pub enum OrthographicCameraHeading {
+    NorthEast,
+    #[default]
+    NorthWest,
+    SouthEast,
+    SouthWest,
+}

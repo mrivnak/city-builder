@@ -1,5 +1,5 @@
 use bevy::{prelude::*, render::camera::ScalingMode, window::PresentMode};
-use components::PanOrbitCamera;
+use components::{PanOrbitCamera, OrthographicCameraHeading};
 use plugins::{CameraControlPlugin, WorldGenPlugin};
 
 #[cfg(feature = "inspector")]
@@ -48,7 +48,7 @@ fn spawn_camera(mut commands: Commands) {
                 ..default()
             }
             .into(),
-            transform: Transform::from_xyz(-200., 200., 200.).looking_at(
+            transform: Transform::from_xyz(128., 64., 128.).looking_at(
                 Vec3 {
                     x: 64.0,
                     y: 0.0,
@@ -58,7 +58,9 @@ fn spawn_camera(mut commands: Commands) {
             ),
             ..default()
         },
-        PanOrbitCamera {},
+        PanOrbitCamera {
+            heading: OrthographicCameraHeading::NorthWest,
+        },
     ));
 }
 
