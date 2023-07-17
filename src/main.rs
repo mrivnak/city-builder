@@ -1,5 +1,5 @@
 use bevy::{prelude::*, render::camera::ScalingMode, window::PresentMode};
-use components::{PanOrbitCamera, OrthographicCameraHeading};
+use components::{OrthographicCameraHeading, PanOrbitCamera};
 use plugins::{CameraControlPlugin, WorldGenPlugin};
 
 #[cfg(feature = "inspector")]

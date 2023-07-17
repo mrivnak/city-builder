@@ -98,6 +98,6 @@ fn control_camera_pan(
 fn rotate(velocity: Vec2, heading: &OrthographicCameraHeading) -> Vec2 {
     match heading {
         OrthographicCameraHeading::NorthWest => velocity,
-        _ => todo!("Implement camera rotation")
+        _ => todo!("Implement camera rotation"),
     }
 }
