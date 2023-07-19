@@ -1,11 +1,13 @@
 use bevy::{prelude::*, render::camera::ScalingMode, window::PresentMode};
 use components::{OrthographicCameraHeading, PanOrbitCamera};
+use consts::*;
 use plugins::{CameraControlPlugin, WorldGenPlugin};
 
 #[cfg(feature = "inspector")]
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
 
 mod components;
+mod consts;
 mod plugins;
 mod resources;
 mod worldgen;
@@ -48,11 +50,16 @@ fn spawn_camera(mut commands: Commands) {
                 ..default()
             }
             .into(),
-            transform: Transform::from_xyz(128., 64., 128.).looking_at(
+            transform: Transform::from_xyz(
+                WORLD_CENTER + CAMERA_DISTANCE,
+                CAMERA_HEIGHT,
+                WORLD_CENTER + CAMERA_DISTANCE,
+            )
+            .looking_at(
                 Vec3 {
-                    x: 64.0,
-                    y: 0.0,
-                    z: 64.0,
+                    x: WORLD_CENTER,
+                    y: WORLD_HEIGHT,
+                    z: WORLD_CENTER,
                 },
                 Vec3::Y,
             ),
