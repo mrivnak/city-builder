@@ -75,7 +75,7 @@ jobs:
 
       - name: Parse Semver
         id: parse-semver
-        uses: madhead/semver-utils@1.0.0
+        uses: madhead/semver-utils@1.6.0
         with:
           version: ${{ github.ref_name }}
 
